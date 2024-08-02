@@ -1,3 +1,6 @@
+"""
+This is the vedder module, an all-purpose module importing a bunch of useful libraries and creating a bunch of useful functions.
+"""
 # Import libraries
 from abc import *
 from argparse import *
@@ -27,7 +30,6 @@ from contextlib import *
 from contextvars import *
 from copy import *
 from copyreg import *
-from csv import *
 from ctypes import *
 from curses import *
 from dataclasses import *
@@ -183,4 +185,24 @@ from zipimport import *
 from zlib import *
 from zoneinfo import *
 from vh import *
-print("imported") 
+
+# Function to read from a URI and return contents
+def read_uri(uri):
+        """
+        Read from a URI and return its contents.
+
+        Parameters:
+        uri (str): The URI to read from.
+
+        Returns:
+        str: The data retrieved from the URI.
+
+        Example:
+        read_uri("https://www.apple.com/")
+        """
+        try:
+                with request.urlopen(uri) as response:
+                        data = response.read().decode("utf-8")
+                        return data
+        except Exception as error:
+                return f"Error - {error}"
