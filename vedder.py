@@ -188,10 +188,64 @@ from zlib import *
 from zoneinfo import *
 from vh import *
 
+# Function to generate a custom arithmetic sequence
+def arithmetic_sequence(start, difference, length):
+        """
+        Generates an arithmetic sequence of length length starting with start and having a common difference of difference.
+
+        Parameters
+        start (float): The first number in the sequence.
+        difference (float): The difference between consecutive terms.
+        length (int): The length of the sequence.
+
+        Returns
+        list: The arithmetic sequence.
+
+        Example
+        arithmetic_sequence(3.5, 2.5, 4)
+        Output: [3.5, 6, 8.5, 11]
+        """
+        try:
+                output = []
+                for i in range(length):
+                        output.append(start + difference * i)
+                return output
+        except Exception as error:
+                return f"Error - {error}"
+
+# Function to generate all Fibonacci numbers up to a maximum
+def generate_fibonacci(max):
+        """
+        Generates a list of all Fibonacci numbers up to a maximum and returns them.
+
+        Parameters
+        max (int): The highest value to include in the list.
+
+        Returns
+        list: The list of Fibonacci numbers.
+
+        Example
+        generate_fibonacci(100)
+        Output: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+        """
+        try:
+                if max <= 0:
+                        return []
+                output = [1, 1]
+                while True:
+                        i = len(output)
+                        num = output[i - 1] + output[i - 2]
+                        if num > max:
+                                break
+                        output.append(num)
+                return output
+        except Exception as error:
+                return f"Error - {error}"
+
 # Function to generate all primes up to a maximum
 def generate_primes(max):
         """
-        Generates a list of all prime numbers up to max using the Sieve of Eratosthenes and returns them.
+        Generates a list of all prime numbers up to a maximum using the Sieve of Eratosthenes and returns them.
 
         Parameters
         max (int): The highest value to include in the list.
@@ -203,19 +257,46 @@ def generate_primes(max):
         generate_primes(100)
         Output: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
         """
-        if max <= 1:
-                return []
-        output = [2]
-        for i in range(3, max + 1, 2):
-                is_prime = True
-                for j in output:
-                        if i % j == 0:
-                                is_prime = False
-                                break
-                if is_prime:
-                        output.append(i)
-        return output
+        try:
+                if max <= 1:
+                        return []
+                output = [2]
+                for i in range(3, max + 1, 2):
+                        is_prime = True
+                        for j in output:
+                                if i % j == 0:
+                                        is_prime = False
+                                        break
+                        if is_prime:
+                                output.append(i)
+                return output
+        except Exception as error:
+                return f"Error - {error}"
 
+# Function to generate a custom geometric sequence
+def geometric_sequence(start, ratio, length):
+        """
+        Generates a geometric sequence of length length starting with start and having a common ratio of ratio.
+
+        Parameters
+        start (float): The first number in the sequence.
+        ratio (float): The ratio between consecutive terms.
+        length (int): The length of the sequence.
+
+        Returns
+        list: The geometric sequence.
+
+        Example
+        geometric_sequence(1.5, 2.5, 4)
+        Output: [1.5, 3.75, 9.375, 23.4375]
+        """
+        try:
+                output = []
+                for i in range(length):
+                        output.append(start * (ratio ** i))
+                return output
+        except Exception as error:
+                return f"Error - {error}"
 
 # Function to check if a number is prime
 def is_prime(num):
@@ -232,12 +313,15 @@ def is_prime(num):
         is_prime(5)
         Output: True
         """
-        is_prime = True
-        for j in range(2, num):
-                if num % j == 0:
-                        is_prime = False
-                        break
-        return is_prime
+        try:
+                is_prime = True
+                for j in range(2, num):
+                        if num % j == 0:
+                                is_prime = False
+                                break
+                return is_prime
+        except Exception as error:
+                return f"Error - {error}"
 
 # Function to read from a file and return contents
 def read_file(filepath):
