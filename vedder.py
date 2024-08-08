@@ -170,7 +170,8 @@ from types import *
 from typing import *
 from unicodedata import *
 from unittest import *
-from urllib import *
+from urllib.error import *
+from urllib.request import *
 from uuid import *
 from venv import *
 from warnings import *
@@ -186,6 +187,57 @@ from zipimport import *
 from zlib import *
 from zoneinfo import *
 from vh import *
+
+# Function to generate all primes up to a maximum
+def generate_primes(max):
+        """
+        Generates a list of all prime numbers up to max using the Sieve of Eratosthenes and returns them.
+
+        Parameters
+        max (int): The highest value to include in the list.
+
+        Returns
+        list: The list of prime numbers.
+
+        Example
+        generate_primes(100)
+        Output: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+        """
+        if max <= 1:
+                return []
+        output = [2]
+        for i in range(3, max + 1, 2):
+                is_prime = True
+                for j in output:
+                        if i % j == 0:
+                                is_prime = False
+                                break
+                if is_prime:
+                        output.append(i)
+        return output
+
+
+# Function to check if a number is prime
+def is_prime(num):
+        """
+        Check if a number is prime using the Sieve of Eratosthenes.
+
+        Parameters
+        num (int): The number to check for primality.
+
+        Returns
+        bool: The primality truth value.
+
+        Example
+        is_prime(5)
+        Output: True
+        """
+        is_prime = True
+        for j in range(2, num):
+                if num % j == 0:
+                        is_prime = False
+                        break
+        return is_prime
 
 # Function to read from a file and return contents
 def read_file(filepath):
@@ -203,8 +255,8 @@ def read_file(filepath):
         Output: Contents of the file
         """
         try:
-                with open(filepath) as file:
-                        data = response.read()
+                with builtins.open(filepath, "r") as file:
+                        data = file.read()
                         return data
         except Exception as error:
                 return f"Error - {error}"
@@ -225,7 +277,10 @@ def read_uri(uri):
         Output: "<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:la..."
         """
         try:
-                with request.urlopen(uri) as response:
+                context = create_default_context()
+                context.check_hostname = False
+                context.verify_mode = CERT_NONE
+                with urlopen(uri, context = context) as response:
                         data = response.read().decode("utf-8")
                         return data
         except Exception as error:
