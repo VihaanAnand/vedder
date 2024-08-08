@@ -1,6 +1,7 @@
 """
 This is the vedder module, an all-purpose module importing a bunch of useful libraries and creating a bunch of useful functions.
 """
+
 # Import libraries
 from abc import *
 from argparse import *
@@ -186,23 +187,67 @@ from zlib import *
 from zoneinfo import *
 from vh import *
 
+# Function to read from a file and return contents
+def read_file(filepath):
+        """
+        Read from a file and return its contents.
+
+        Parameters
+        filepath (str): The path of the file to read from.
+
+        Returns
+        str: The data retrieved from the file.
+
+        Example
+        read_file("/path/to/file/goes/here/file.txt")
+        Output: Contents of the file
+        """
+        try:
+                with open(filepath) as file:
+                        data = response.read()
+                        return data
+        except Exception as error:
+                return f"Error - {error}"
+
 # Function to read from a URI and return contents
 def read_uri(uri):
         """
         Read from a URI and return its contents.
 
-        Parameters:
+        Parameters
         uri (str): The URI to read from.
 
-        Returns:
+        Returns
         str: The data retrieved from the URI.
 
-        Example:
+        Example
         read_uri("https://www.apple.com/")
+        Output: "<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:la..."
         """
         try:
                 with request.urlopen(uri) as response:
                         data = response.read().decode("utf-8")
                         return data
+        except Exception as error:
+                return f"Error - {error}"
+
+# Function to run a terminal command
+def terminal_command(command):
+        """
+        Run a terminal/shell command and return its output.
+
+        Parameters
+        command (str): The command to run.
+
+        Returns
+        str: The output of the command.
+
+        Example
+        terminal_command("pwd")
+        Output: "/Users/user/Desktop/my/path/here"
+        """
+        try:
+                output = subprocess.check_output(command, shell = True).decode()
+                return output
         except Exception as error:
                 return f"Error - {error}"
