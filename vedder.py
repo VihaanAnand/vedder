@@ -187,6 +187,35 @@ from zipimport import *
 from zlib import *
 from zoneinfo import *
 from vh import *
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def run_in_parallel(func, args_list=None, kwargs_list=None, max_workers=4):
+    """
+    Runs the input function in parallel using multiple threads.
+    
+    :param func: The function to be executed in parallel.
+    :param args_list: A list of tuples, where each tuple contains the positional arguments for one execution of func.
+    :param kwargs_list: A list of dictionaries, where each dictionary contains the keyword arguments for one execution of func.
+    :param max_workers: The maximum number of threads to use.
+    :return: A list of results from the function executions.
+    """
+    if args_list is None:
+        args_list = []
+    if kwargs_list is None:
+        kwargs_list = [{} for _ in range(len(args_list))]
+
+    results = []
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_args = {
+            executor.submit(func, *args, **kwargs): (args, kwargs)
+            for args, kwargs in zip(args_list, kwargs_list)
+        }
+        
+        for future in as_completed(future_to_args):
+            result = future.result()
+            results.append(result)
+    
+    return results
 
 # Function to generate a custom arithmetic sequence
 def arithmetic_sequence(start, difference, length):
