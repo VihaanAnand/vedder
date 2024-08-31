@@ -214,6 +214,32 @@ def arithmetic_sequence(start, difference, length):
         except Exception as error:
                 return f"Error - {error}"
 
+# Function to prime factorise a number
+def factorise(num):
+        """
+        Prime factorises the num.
+
+        Parameters
+        num (int): The number to prime factorise.
+
+        Returns
+        dict: The prime factorisation.
+
+        Example
+        factorise(2250)
+        Output: {2: 1, 3: 2, 5: 3}
+        """
+        try:
+                primes = generate_primes(num)
+                result = {}
+                for prime in primes:
+                        while num % prime == 0:
+                                num /= prime
+                                result[prime] = result.get(prime, 0) + 1
+                return result
+        except Exception as error:
+                return f"Error - {error}"
+
 # Function to generate all Fibonacci numbers up to a maximum
 def generate_fibonacci(max):
         """
